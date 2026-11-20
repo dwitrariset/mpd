@@ -1,0 +1,230 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <base target="_top">
+  <link rel="stylesheet" type="text/css" href="../asset/gaya tulisan.css">
+  <style>
+    /* CSS Responsif */
+    body {
+      font-family: Arial, sans-serif;
+      line-height: 1.6;
+      margin: 0;
+      padding: 0;
+      background-color: #f0f0f0;
+    }
+    
+    .container {
+      max-width: 800px;
+      margin: 0 auto;
+      padding: 20px;
+      background-color: #fff;
+      box-shadow: 0 0 10px rgba(0,0,0,0.1);
+    }
+    
+    .img-center {
+      display: block;
+      margin: 0 auto;
+      max-width: 100%;
+      height: auto;
+    }
+    
+    header {
+      text-align: center;
+      margin-bottom: 20px;
+    }
+    
+    form {
+      margin-bottom: 20px;
+    }
+    
+    label {
+      font-weight: bold;
+    }
+    
+    input[type="text"], button {
+      padding: 8px;
+      margin-bottom: 10px;
+      width: calc(100% - 16px);
+      box-sizing: border-box;
+    }
+    
+    button {
+      background-color: #4CAF50;
+      color: white;
+      border: none;
+      cursor: pointer;
+    }
+    
+    button:hover {
+      background-color: #45a049;
+    }
+    
+    #output, #keterangan, #detail, #jumlahKeterangan {
+      margin-bottom: 20px;
+      padding: 10px;
+      border: 1px solid #ccc;
+      background-color: #f9f9f9;
+    }
+    
+    .detail-item {
+      margin-bottom: 10px;
+    }
+    
+    .back-button {
+      background-color: #f44336;
+    }
+    
+    .back-button:hover {
+      background-color: #da190b;
+    }
+    
+    /* Tambahan CSS jika diperlukan */
+    .img-center {
+      display: block;
+      margin: 0 auto;
+    }
+    
+    @media (max-width: 600px) {
+      input[type="text"], button {
+        width: 100%;
+      }
+    }
+  </style>
+</head>
+<body>
+  <div class="container">
+    <img class="img-center" src="../asset/logo dwitra.jpg" alt="Logo Dwitra">
+    <header>
+      <h1>Penilaian Akhir (Otomatis)</h1>
+
+      <!-- Formulir Pencarian -->
+      <form id="searchForm">
+        <label>Pilih Kategori:</label><br>
+        <input type="checkbox" name="category" value="Nama Peserta"> Nama Peserta<br>
+        <input type="text" id="searchInput" placeholder="Masukkan kata kunci pencarian">
+        <button type="button" onclick="search()">Cari</button>
+      </form>
+
+      <div id="output"></div>
+
+      <div id="keterangan"></div>
+
+      <div id="detail"></div>
+
+      <!-- Keterangan Jumlah -->
+      <div id="jumlahKeterangan"></div>
+
+      <button onclick="previousData()">Sebelumnya</button>
+      <button onclick="nextData()">Selanjutnya</button>
+      <button class="back-button" onclick="window.location.href='admin aja.html'">Kembali</button>
+    </header>
+
+    <script>
+      var url = 'https://script.google.com/macros/s/AKfycbx3Me_r8qzbrc9pZKo2_CUjGWNQQcnj2-Ecmzw6DsyBJhGQAMFyhF7-jPnQI6xbBF0dHQ/exec';
+      var searchData = [];
+      var currentIndex = 0;
+      var data;
+
+      function search() {
+        var categories = document.getElementsByName('category');
+        var selectedCategories = [];
+        for (var i = 0; i < categories.length; i++) {
+          if (categories[i].checked) {
+            selectedCategories.push(categories[i].value);
+          }
+        }
+        var searchInput = document.getElementById('searchInput').value.toLowerCase();
+
+        searchData = data.filter(function(item) {
+          for (var i = 0; i < selectedCategories.length; i++) {
+            if (item[selectedCategories[i]].toLowerCase().includes(searchInput)) {
+              return true;
+            }
+          }
+          return false;
+        });
+        currentIndex = 0;
+        showData();
+      }
+
+      function showData() {
+        var currentData = searchData[currentIndex];
+
+        if (currentData) {
+          document.getElementById('output').innerHTML = `
+            <p class="detail-item">Nama Peserta: ${currentData['Nama Peserta']}</p>
+            <p class="detail-item">Pertemuan 1: ${currentData['Kolom B']}</p>
+            <p class="detail-item">Pertemuan 2: ${currentData['Kolom C']}</p>
+            <p class="detail-item">Pertemuan 3: ${currentData['Kolom D']}</p>
+            <p class="detail-item">Pertemuan 4: ${currentData['Kolom E']}</p>
+            <p class="detail-item">Pertemuan 5: ${currentData['Kolom F']}</p>
+            <p class="detail-item">Pertemuan 6: ${currentData['Kolom G']}</p>
+            <p class="detail-item">Pertemuan 7: ${currentData['Kolom H']}</p>
+            <p class="detail-item">Pertemuan 8: ${currentData['Kolom I']}</p>
+            <p class="detail-item">Pertemuan 9: ${currentData['Kolom J']}</p>
+            <p class="detail-item">Pertemuan 10: ${currentData['Kolom K']}</p>
+            <p class="detail-item">Pertemuan 11: ${currentData['Kolom L']}</p>
+            <p class="detail-item">Pertemuan 12: ${currentData['Kolom M']}</p>
+            <p class="detail-item">Pertemuan 13: ${currentData['Kolom N']}</p>
+            <p class="detail-item">Pertemuan 14: ${currentData['Kolom O']}</p>
+            <p class="detail-item">Pertemuan 15: ${currentData['Kolom P']}</p>
+            <p class="detail-item">Pertemuan 16: ${currentData['Kolom Q']}</p>            
+          `;
+
+          document.getElementById('keterangan').innerHTML = 'Data ditemukan';
+
+          document.getElementById('jumlahKeterangan').innerHTML = `Keterangan Jumlah: ${currentIndex + 1} dari ${searchData.length} data yang ditemukan`;
+
+          showDetail(currentData);
+        } else {
+          document.getElementById('output').innerHTML = '';
+          document.getElementById('keterangan').innerHTML = 'Data tidak ditemukan';
+          document.getElementById('jumlahKeterangan').innerHTML = '';
+
+          clearDetail();
+        }
+      }
+
+      function showDetail(data) {
+        document.getElementById('detail').innerHTML = `
+          
+          `;
+      }
+
+      function clearDetail() {
+        document.getElementById('detail').innerHTML = '';
+      }
+
+      function showAllData() {
+        searchData = data; // Ambil semua data
+        currentIndex = 0;
+        showData();
+      }
+
+      function previousData() {
+        if (currentIndex > 0) {
+          currentIndex--;
+          showData();
+        }
+      }
+
+      function nextData() {
+        if (currentIndex < searchData.length - 1) {
+          currentIndex++;
+          showData();
+        }
+      }
+
+      fetch(url)
+        .then(response => response.json())
+        .then(dataResponse => {
+          data = dataResponse.slice(1); // Mengabaikan satu baris pertama
+          showAllData();
+        })
+        .catch(error => console.error('Error:', error));
+    </script>
+  </div>
+</body>
+</html>
